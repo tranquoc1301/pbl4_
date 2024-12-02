@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Default Title{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/sidebar.css') }}"
+    />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='img/time.ico') }}"
+      type="image/x-icon"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/table.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="d-flex">
+      <!-- Include Sidebar -->
+      {% include 'sidebar.html' %} {% include 'notification.html' %}
+      <!-- Main Content -->
+      <div class="flex-grow-1" id="main-content" style="margin-left: 260px">
+        {% include 'header.html' %}
+        <div class="container-fluid py-3">
+          {% block content %} {% endblock %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document
+        .getElementById("sidebarToggle")
+        .addEventListener("click", function () {
+          var sidebar = document.getElementById("sidebarMenu");
+          var mainContent = document.getElementById("main-content");
+
+          sidebar.classList.toggle("collapsed");
+
+          // Điều chỉnh margin-left cho main content
+          if (sidebar.classList.contains("collapsed")) {
+            mainContent.style.marginLeft = "80px"; // Khi sidebar bị thu gọn
+          } else {
+            mainContent.style.marginLeft = "260px"; // Khi sidebar mở rộng
+          }
+        });
+    </script>
+  </body>
+</html>

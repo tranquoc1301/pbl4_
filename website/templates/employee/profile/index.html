@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block title %} Edit Profile {% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}" />
+
+<div class="container py-5">
+  <form
+    action="{{ url_for('employee.update_profile', employee_id=employee.id) }}"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    <div class="card">
+      <div class="card-header text-center bg-primary text-white rounded-top">
+        <h2 class="mb-0">Edit Profile</h2>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4 text-center">
+            <div class="profile-img position-relative">
+              <img
+                id="profile-image-preview"
+                src="{{ url_for('static', filename='img/avatar/' + employee.image) }}"
+                alt="{{ employee.name }}"
+                class="shadow-sm rounded-circle"
+                style="width: 200px; height: 200px; object-fit: cover; border: 3px solid #ddd;"
+              />
+              <button
+                type="button"
+                class="btn btn-sm btn-secondary change-avatar-btn"
+                id="edit-avatar-btn"
+                title="Change Avatar"
+                style="display: none; position: absolute; bottom: 10px; right: 10px; z-index: 10;"
+              >
+                <i class="bi bi-camera"></i>
+              </button>
+              <input
+                type="file"
+                id="image-input"
+                name="image"
+                accept="image/*"
+                style="display: none;"
+              />
+            </div>
+          </div>
+
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-6 mb-3">
+                <label for="name"><strong>Name:</strong></label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value="{{ employee.name }}"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="col-6 mb-3">
+                <label for="email"><strong>Email:</strong></label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value="{{ employee.email }}"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="col-6 mb-3">
+                <label for="gender"><strong>Gender:</strong></label>
+                <select id="gender" name="gender" class="form-select">
+                  <option value="M" {% if employee.gender == "M" %}selected{% endif %}>
+                    Male
+                  </option>
+                  <option value="F" {% if employee.gender == "F" %}selected{% endif %}>
+                    Female
+                  </option>
+                </select>
+              </div>
+              <div class="col-6 mb-3">
+                <label for="department_id"><strong>Department:</strong></label>
+                <input
+                  type="text"
+                  id="department_name"
+                  name="department_name"
+                  value="{{ department.name }}" 
+                  class="form-control"
+                  readonly
+                />
+                <input type="hidden" name="department_id" value="{{ department.id }}" />
+              </div>
+              
+              
+              
+              
+              <div class="col-6 mb-3">
+                <label for="birth_date"><strong>Birth Date:</strong></label>
+                <input
+                  type="date"
+                  id="birth_date"
+                  name="birth_date"
+                  value="{{ employee.birth_date }}"
+                  class="form-control"
+                />
+              </div>
+              <div class="col-6 mb-3">
+                <label for="hire_date"><strong>Hire Date:</strong></label>
+                <input
+                  type="date"
+                  id="hire_date"
+                  name="hire_date"
+                  value="{{ employee.hire_date }}"
+                  class="form-control"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-center">
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-save"></i> Save Changes
+        </button>
+        <a href="{{ url_for('employee.profile', employee_id=employee.id) }}" class="btn btn-secondary">
+          <i class="bi bi-x"></i> Cancel
+        </a>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+  // Kích hoạt input file khi nhấn nút edit avatar
+  document.getElementById("edit-avatar-btn").addEventListener("click", function () {
+    document.getElementById("image-input").click();
+  });
+
+  // Cập nhật ảnh preview khi người dùng chọn ảnh mới
+  document.getElementById("image-input").addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById("profile-image-preview").src = e.target.result;
+      };
+      reader.readAsDataURL(file); // Đọc tệp dưới dạng DataURL
+    }
+  });
+</script>
+{% endblock %}

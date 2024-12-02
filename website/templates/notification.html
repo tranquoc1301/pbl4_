@@ -1,0 +1,49 @@
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/notification.css') }}"
+/>
+{% if get_flashed_messages() %}
+<div class="notifications-container">
+  {% for category, message_content in get_flashed_messages(with_categories=true)
+  %} {% if message_content %}
+  <div
+    class="alert alert-{{ category }} alert-dismissible fade show"
+    role="alert"
+  >
+    <div class="icon-container">
+      {% if category == 'success' %}
+      <i class="fas fa-check-circle"></i>
+      {% elif category == 'danger' %}
+      <i class="fas fa-times-circle"></i>
+      {% elif category == 'info' %}
+      <i class="fas fa-info-circle"></i>
+      {% elif category == 'warning' %}
+      <i class="fas fa-exclamation-triangle"></i>
+      {% endif %}
+    </div>
+    <div class="message-content">{{ message_content }}</div>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  {% endif %} {% endfor %}
+</div>
+{% endif %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const alerts = document.querySelectorAll(".alert");
+
+    alerts.forEach(function (alert) {
+      setTimeout(function () {
+        alert.classList.add("fade-out");
+        setTimeout(function () {
+          alert.remove();
+        }, 1000);
+      }, 5000); // Notifications will remain visible for 5 seconds
+    });
+  });
+</script>

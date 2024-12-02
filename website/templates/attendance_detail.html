@@ -1,0 +1,101 @@
+{% extends 'base.html' %} {% block title %}Attendance Details{% endblock %} {%
+block content %}
+<div class="container py-4">
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-primary">Attendance Details</h2>
+    <a
+      href="{{ url_for('attendance.index') if g.user.role_id == 1 else url_for('attendance.employee_attendance', employee_id=g.employee.id) }}"
+      class="btn btn-outline-primary"
+    >
+      <i class="fas fa-arrow-left"></i> Back to List
+    </a>
+  </div>
+
+  <!-- Attendance Details Card -->
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">Details for Attendance</h5>
+    </div>
+    <div class="card-body">
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <strong>Employee ID:</strong>
+        </div>
+        <div class="col-md-8">{{ attendance.employee_id }}</div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <strong>Employee Name:</strong>
+        </div>
+        <div class="col-md-8">{{ employee.name }}</div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <strong>Department:</strong>
+        </div>
+        <div class="col-md-8">{{ department.name }}</div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <strong>In Time:</strong>
+        </div>
+        <div class="col-md-8">
+          {{ attendance.start_time.strftime('%H:%M:%S') if attendance.start_time
+          else 'N/A' }}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <strong>End Time:</strong>
+        </div>
+        <div class="col-md-8">
+          {{ attendance.end_time.strftime('%H:%M:%S') if attendance.end_time
+          else 'N/A' }}
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <strong>Start Image:</strong>
+        </div>
+        <div class="col-md-8">
+          {% if attendance.start_img_path %}
+          <img
+            src="{{ url_for('static', filename='checkin/' + attendance.start_img_path) }}"
+            alt="Check-In"
+            class="img-fluid rounded"
+            style="max-width: 200px"
+          />
+          {% else %} N/A {% endif %}
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <strong>End Image:</strong>
+        </div>
+        <div class="col-md-8">
+          {% if attendance.end_img_path %}
+          <img
+            src="{{ url_for('static', filename='checkout/' + attendance.end_img_path) }}"
+            alt="Check-Out"
+            class="img-fluid rounded"
+            style="max-width: 200px"
+          />
+          {% else %} N/A {% endif %}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <strong>Total Work Time:</strong>
+        </div>
+        <div class="col-md-8">{{ total_work_time }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

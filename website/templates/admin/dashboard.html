@@ -1,0 +1,65 @@
+{% extends 'base.html' %} {% block title %}Dashboard{% endblock %} {% block
+content %}
+<title>Dashboard</title>
+<div class="container-fluid">
+  <!-- Dashboard Content -->
+  <div class="container mt-4">
+    <div class="row">
+      <!-- Users Card -->
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-header d-flex align-items-center">
+            <i class="fas fa-user fa-lg me-2"></i>
+            <span>Users</span>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">{{ users_count }}</h4>
+            <p class="card-text">Total registered users.</p>
+            <a href="{{ url_for('user.index') }}" class="btn btn-primary btn-sm"
+              >Manage Users</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Employees Card -->
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-header d-flex align-items-center">
+            <i class="fas fa-users fa-lg me-2"></i>
+            <span>Employees</span>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">{{ employees_count }}</h4>
+            <p class="card-text">Total employees in the system.</p>
+            <a
+              href="{{ url_for('employee.index') }}"
+              class="btn btn-primary btn-sm"
+              >View Employees</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Departments Card -->
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-header d-flex align-items-center">
+            <i class="fas fa-building fa-lg me-2"></i>
+            <span>Departments</span>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">{{ departments_count }}</h4>
+            <p class="card-text">Active departments.</p>
+            <a
+              href="{{ url_for('department.index') }}"
+              class="btn btn-primary btn-sm"
+              >Manage Departments</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

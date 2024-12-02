@@ -1,0 +1,119 @@
+<!-- Edit Attendance Modal -->
+{% for attendance in attendances %}
+<div
+  class="modal fade"
+  id="updateAttendanceModal{{ attendance.id }}"
+  tabindex="-1"
+  aria-labelledby="updateAttendanceModalLabel{{ attendance.id }}"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5
+          class="modal-title"
+          id="updateAttendanceModalLabel{{ attendance.id }}"
+        >
+          Edit Attendance
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          action="{{ url_for('attendance.update', attendance_id=attendance.id) }}"
+          method="POST"
+        >
+          <div class="mb-3">
+            <label for="employee_id" class="form-label">Employee ID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="employee_id"
+              name="employee_id"
+              value="{{ attendance.employee_id }}"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="department_id" class="form-label">Department ID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="department_id"
+              name="department_id"
+              value="{{ attendance.department_id }}"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="start_time" class="form-label">Start Time</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              id="start_time"
+              name="start_time"
+              value="{{ attendance.start_time.strftime('%H:%M:%S') }}"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="end_time" class="form-label">Start Time</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              id="end_time"
+              name="end_time"
+              value="{{ attendance.end_time.strftime('%H:%M:%S') }}"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="check_in_img" class="form-label">Start Image </label>
+            <input
+              type="url"
+              class="form-control"
+              id="start_img_path"
+              name="start_img_path"
+              value="{{ attendance.start_img_path }}"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="check_out_img" class="form-label">End Image</label>
+            <input
+              type="url"
+              class="form-control"
+              id="end_img_path"
+              name="end_img_path"
+              value="{{ attendance.end_img_path }}"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="total_work_time" class="form-label"
+              >Total Work Time (in hours)</label
+            >
+            <input
+              type="number"
+              step="0.01"
+              class="form-control"
+              id="total_work_time"
+              name="total_work_time"
+              value="{{ attendance.total_work_time }}"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Update Attendance
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}

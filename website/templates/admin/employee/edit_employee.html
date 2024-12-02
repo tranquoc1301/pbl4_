@@ -1,0 +1,167 @@
+<!-- Modal for Update Employee -->
+{% for employee in employees %}
+<div
+  class="modal fade"
+  id="updateEmployeeModal{{ employee.id }}"
+  tabindex="-1"
+  aria-labelledby="updateEmployeeModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form
+        action="{{ url_for('employee.update', employee_id=employee.id) }}"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div class="modal-header">
+          <h5 class="modal-title text-primary" id="updateEmployeeModalLabel">
+            Update Employee
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="employeeId" name="employee_id" value="{{ employee.id }}" />
+
+          <div class="row g-4">
+            <div class="col-md-4 text-center">
+              <img
+                id="coverPreviewUpdate"
+                src="{{ url_for('static', filename='img/avatar/' + employee.image) }}"
+                alt="Image Preview"
+                class="img-fluid mb-3"
+                style="
+                width: 250px;
+                height: 250px;
+                border-radius: 50%;
+                object-fit: cover;
+                "
+              />
+              <input
+                type="file"
+                class="form-control"
+                id="imageUpdate"
+                name="image"
+                accept="image/*"
+                onchange="previewCoverUpdate()"
+              />
+            </div>
+            <div class="col-md-8">
+              <div class="mb-3">
+                <label for="nameUpdate" class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nameUpdate"
+                  name="name"
+                  value="{{ employee.name }}"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="emailUpdate" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="emailUpdate"
+                  name="email"
+                  value="{{ employee.email }}"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="genderUpdate" class="form-label">Gender</label>
+                <select
+                  class="form-select"
+                  id="genderUpdate"
+                  name="gender"
+                  required
+                >
+                  <option value="M" {% if employee.gender == 'M' %}selected{% endif %}>Male</option>
+                  <option value="F" {% if employee.gender == 'F' %}selected{% endif %}>Female</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="department_id" class="form-label">Department</label>
+                <select
+                  class="form-control"
+                  id="department_id"
+                  name="department_id"
+                  required
+                >
+                  <option value="" disabled selected>Select Department</option>
+                  {% for department in departments %}
+                  <option value="{{ department.id }}" {% if department.id == employee.department_id %}selected{% endif %}>
+                    {{ department.name }}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+              
+              <div class="mb-3">
+                <label for="birth_dateUpdate" class="form-label">Date of Birth</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="birth_dateUpdate"
+                  name="birth_date"
+                  value="{{ employee.birth_date }}"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="hire_dateUpdate" class="form-label">Hire Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="hire_dateUpdate"
+                  name="hire_date"
+                  value="{{ employee.hire_date }}"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="submit" class="btn btn-success">Update Employee</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+<script>
+    // Preview the image for Add Employee
+    function previewCover() {
+      const file = document.getElementById("image").files[0];
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById("coverPreview").src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Preview the image for Update Employee
+    function previewCoverUpdate() {
+      const file = document.getElementById("imageUpdate").files[0];
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById("coverPreviewUpdate").src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  </script>

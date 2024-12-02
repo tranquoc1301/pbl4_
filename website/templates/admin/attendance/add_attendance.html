@@ -1,0 +1,102 @@
+<div
+  class="modal fade"
+  id="addAttendanceModal"
+  tabindex="-1"
+  aria-labelledby="addAttendanceModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addAttendanceModalLabel">
+          Add New Attendance
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url_for('attendance.create') }}" method="POST">
+          <div class="mb-3">
+            <label for="employee_id" class="form-label">Employee ID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="employee_id"
+              name="employee_id"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="start_time" class="form-label">Start Time</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              id="start_time"
+              name="start_time"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="end_time" class="form-label">End Time</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              id="end_time"
+              name="end_time"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="start_img_path" class="form-label">Start Image</label>
+            <input
+              type="url"
+              class="form-control"
+              id="start_img_path"
+              name="start_img_path"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="end_img_path" class="form-label">End Image</label>
+            <input
+              type="url"
+              class="form-control"
+              id="end_img_path"
+              name="end_img_path"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="total_work_time" class="form-label"
+              >Total Work Time (in hours)</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              id="total_work_time"
+              name="total_work_time"
+              step="0.01"
+              required
+            />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Add Attendance
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

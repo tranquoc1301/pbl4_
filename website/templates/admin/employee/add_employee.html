@@ -1,0 +1,157 @@
+<!-- Modal for Add New Employee -->
+<div
+  class="modal fade"
+  id="addEmployeeModal"
+  tabindex="-1"
+  aria-labelledby="addEmployeeModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form
+        action="{{ url_for('employee.create') }}"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div class="modal-header">
+          <h5 class="modal-title text-primary" id="addEmployeeModalLabel">
+            Add New Employee
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-4">
+            <div class="col-md-4 text-center">
+              <div class="mb-3">
+                <img
+                  id="coverPreview"
+                  src="{{ url_for('static', filename='img/avatar/user.png') }}"
+                  alt="Image Preview"
+                  class="img-fluid rounded mb-3"
+                  style="
+                    width: 250px;
+                    height: 250px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                  "
+                />
+              </div>
+              <input
+                type="file"
+                class="form-control"
+                id="image"
+                name="image"
+                accept="image/*"
+                onchange="previewCover()"
+              />
+            </div>
+            <div class="col-md-8">
+              <!-- Input fields for Employee Details -->
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <select class="form-select" id="gender" name="gender" required>
+                  <option disabled selected>Select Gender</option>
+                  <option value="M">Male</option>
+                  <option value="F">Female</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="birth_date" class="form-label">Date of Birth</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="birth_date"
+                  name="birth_date"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="department_id" class="form-label">Department</label>
+                <select
+                  class="form-control"
+                  id="department_id"
+                  name="department_id"
+                  required
+                >
+                  <option value="" disabled selected>Select Department</option>
+                  {% for department in departments %}
+                  <option value="{{ department.id }}">
+                    {{ department.name }}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="hire_date" class="form-label">Hire Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="hire_date"
+                  name="hire_date"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="submit" class="btn btn-success">Add Employee</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  // Preview the image for Add Employee
+  function previewImage() {
+    const file = document.getElementById("image").files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      document.getElementById("imagePreview").src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Preview the image for Update Employee
+  function previewImageUpdate() {
+    const file = document.getElementById("imageUpdate").files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      document.getElementById("imagePreviewUpdate").src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+</script>
